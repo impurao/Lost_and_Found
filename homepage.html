@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecoverIT: Campus Lost and Found Simplified</title>
+    <style>
+        /* Enhanced Styles */
+        :root {
+            --primary-color: #800080;
+            --secondary-color: #600060;
+            --background-color: #f4f4f9;
+            --text-color: #333;
+            --border-color: #ddd;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            padding-bottom: 60px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-section img {
+            width: 60px;
+            margin-right: 15px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 5px 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Enhanced Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Items Display Grid */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .item-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .item-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .status-lost {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        .status-found {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        /* Filters Section */
+        .filters {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul li {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-section">
+                <img src="https://th.bing.com/th/id/OIP.496DqkNTfO2zNkBdNN8qDwHaGu?w=190&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7/placeholder.svg?height=60&width=60" alt="RecoverIT Logo">
+                <h1>RecoverIT: Campus Lost and Found</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showSection('home')">Home</a></li>
+                    <li><a href="#" onclick="showSection('search-items')">Search Items</a></li>
+                    <li><a href="#" onclick="showSection('report-lost')">Report Lost Item</a></li>
+                    <li><a href="#" onclick="showSection('report-found')">Report Found Item</a></li>
+               
+                    <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="section">
+        <div class="container">
+            <h2>Welcome to BMSIT Lost and Found Portal!</h2><br>
+
+Losing or finding something on campus can be stressful, but we’re here to make the process easier and more efficient for everyone. Whether you've misplaced a valuable item, stumbled across something that doesn’t belong to you, or simply want to check for updates, our portal is your one-stop destination.<br>
+
+<h4> Why Use Our Portal? </h4> <br> Our system is designed to make it simple and hassle-free to recover your items or help others. With categorized listings, campus-specific locations, and a user-friendly interface, you can trust us to streamline the lost and found process.<br>
+
+Start by browsing the latest reports or submitting your own. Together, let’s ensure no item gets left behind!<br>
+                    </div>
+    </section>
+
+    <section id="search-items" class="section" style="display:none;">
+        <div class="container">
+            <h2>Search Lost & Found Items</h2>
+            
+            <div class="filters">
+                <div class="filter-grid">
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category">
+                            <option value="">All Categories</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="documents">Documents</option>
+                            <option value="accessories">Accessories</option>
+                            <option value="others">Others</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date-range">Date Range</label>
+                        <input type="date" id="date-from">
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <select id="location">
+                            <option value="">All Locations</option>
+                            <option value="library">Library</option>
+                            <option value="cafeteria">Cafeteria</option>
+                            <option value="academic-block">Academic Block</option>
+                            <option value="sports-complex">Sports Complex</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status">
+                            <option value="">All Status</option>
+                            <option value="lost">Lost</option>
+                            <option value="found">Found</option>
+                            <option value="claimed">Claimed</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn" onclick="searchItems()">Apply Filters</button>
+            </div>
+
+            <div id="search-results" class="items-grid"></div>
+        </div>
+    </section>
+
+    <section id="report-lost" class="section" style="display:none;">
+        <div class="container">
+            <h2>Report a Lost Item</h2>
+            <form id="lost-item-form" onsubmit="submitLostItem(event)">
+                <div class="form-grid">
+                    <div>
+                        <div class="form-group">
+                            <label for="lost-item-name">Item Name*</label>
+                            <input type="text" id="lost-item-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lost-category">Category*</label>
+                            <select id="lost-category" required>
+                                <option value="">Select Category</option>
+                                <option value="electronics">Electronics</option>
+                                <option value="documents">Documents</option>
+                                <option value="accessories">Accessories</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="lost-date">Date Lost*</label>
+                            <input type="date" id="lost-date" required>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <label for="lost-location">Last Seen Location*</label>
+                            <select id="lost-location" required>
+                                <option value="">Select Location</option>
+                                <option value="library">Library</option>
+                                <option value="cafeteria">Cafeteria</option>
+                                <option value="academic-block">Academic Block</option>
+                                <option value="sports-complex">Sports Complex</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="lost-description">Description*</label>
+                            <textarea id="lost-description" rows="4" required></textarea>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <label for="reporter-name">Your Name*</label>
+                            <input type="text" id="reporter-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reporter-email">Email*</label>
+                            <input type="email" id="reporter-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reporter-phone">Phone Number*</label>
+                            <input type="tel" id="reporter-phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="item-image">Item Image</label>
+                            <input type="file" id="item-image" accept="image/*">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Submit Report</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="report-found" class="section" style="display:none;">
+        <div class="container">
+            <h2>Report a Found Item</h2>
+            <form id="found-item-form" onsubmit="submitFoundItem(event)">
+                <div class="form-grid">
+                    <div>
+                        <div class="form-group">
+                            <label for="found-item-name">Item Name*</label>
+                            <input type="text" id="found-item-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="found-category">Category*</label>
+                            <select id="found-category" required>
+                                <option value="">Select Category</option>
+                                <option value="electronics">Electronics</option>
+                                <option value="documents">Documents</option>
+                                <option value="accessories">Accessories</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="found-date">Date Found*</label>
+                            <input type="date" id="found-date" required>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <label for="found-location">Found Location*</label>
+                            <select id="found-location" required>
+                                <option value="">Select Location</option>
+                                <option value="library">Library</option>
+                                <option value="cafeteria">Cafeteria</option>
+                                <option value="academic-block">Academic Block</option>
+                                <option value="sports-complex">Sports Complex</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="found-description">Description*</label>
+                            <textarea id="found-description" rows="4" required></textarea>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <label for="finder-name">Your Name*</label>
+                            <input type="text" id="finder-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="finder-email">Email*</label>
+                            <input type="email" id="finder-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="finder-phone">Phone Number*</label>
+                            <input type="tel" id="finder-phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="found-item-image">Item Image</label>
+                            <input type="file" id="found-item-image" accept="image/*">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Submit Report</button>
+            </form>
+        </div>
+    </section>
+
+   
+    <section id="contact" class="section" style="display:none;">
+        <div class="container">
+            <h2>Contact Lost & Found Department</h2>
+            <div class="contact-info">
+                <p><strong>Location:</strong> Student Services Building, Room 101</p>
+                <p><strong>Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM</p>
+                <p><strong>Email:</strong> lostandfound@college.edu</p>
+                <p><strong>Phone:</strong> (555) 123-4567</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 RecoverIT - Campus Lost and Found System</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample data structure for items
+        let items = [
+            
+    {
+        "id": 1,
+        "name": "MacBook Pro",
+        "category": "electronics",
+        "description": "13-inch, Space Gray, 2021 model",
+        "location": "library",
+        "status": "lost",
+        "date": "2024-01-15",
+        "reporter": {
+            "name": "John Doe",
+            "email": "john@college.edu",
+            "phone": "555-0123"
+        },
+        "image": "/placeholder.svg?height=200&width=300"
+    },
+    {
+        "id": 2,
+        "name": "Sony Headphones",
+        "category": "electronics",
+        "description": "Wireless noise-cancelling headphones, black",
+        "location": "cafeteria",
+        "status": "lost",
+        "date": "2024-01-16",
+        "reporter": {
+            "name": "Jane Smith",
+            "email": "jane@college.edu",
+            "phone": "555-0345"
+        },
+        "image": "/placeholder.svg?height=200&width=300"
+    },
+    {
+        "id": 3,
+        "name": "ID Card",
+        "category": "document",
+        "description": "College ID card with name Alex Johnson",
+        "location": "academic block",
+        "status": "found",
+        "date": "2024-01-17",
+        "reporter": {
+            "name": "Michael Lee",
+            "email": "michael@college.edu",
+            "phone": "555-0789"
+        },
+        "image": "/placeholder.svg?height=200&width=300"
+    },
+    {
+        "id": 4,
+        "name": "Water Bottle",
+        "category": "accessory",
+        "description": "Blue stainless steel bottle, 1 liter",
+        "location": "sports complex",
+        "status": "lost",
+        "date": "2024-01-18",
+        "reporter": {
+            "name": "Emily Davis",
+            "email": "emily@college.edu",
+            "phone": "555-0921"
+        },
+        "image": "/placeholder.svg?height=200&width=300"
+    },
+    {
+        "id": 5,
+        "name": "Physics Textbook",
+        "category": "document",
+        "description": "Advanced Physics by David Halliday, 10th Edition",
+        "location": "library",
+        "status": "found",
+        "date": "2024-01-19",
+        "reporter": {
+            "name": "Sophia Wilson",
+            "email": "sophia@college.edu",
+            "phone": "555-0456"
+        },
+        "image": "/placeholder.svg?height=200&width=300"
+    },
+    {
+        "id": 6,
+        "name": "Smartphone",
+        "category": "electronics",
+        "description": "iPhone 14, Midnight color, 256GB",
+        "location": "cafeteria",
+        "status": "lost",
+        "date": "2024-01-20",
+        "reporter": {
+            "name": "Liam Brown",
+            "email": "liam@college.edu",
+            "phone": "555-0678"
+        },
+        "image": "/placeholder.svg?height=200&width=300"
+    },
+    {
+        "id": 7,
+        "name": "Wristwatch",
+        "category": "accessory",
+        "description": "Analog wristwatch with brown leather strap",
+        "location": "sports complex",
+        "status": "found",
+        "date": "2024-01-21",
+        "reporter": {
+            "name": "Ethan Moore",
+            "email": "ethan@college.edu",
+            "phone": "555-0124"
+        },
+        "image": "/placeholder.svg?height=200&width=300"
+    },
+    {
+        "id": 8,
+        "name": "Notebook",
+        "category": "document",
+        "description": "Spiral-bound notebook, black cover, labeled 'Calculus Notes'",
+        "location": "academic block",
+        "status": "lost",
+        "date": "2024-01-22",
+        "reporter": {
+            "name": "Olivia Taylor",
+            "email": "olivia@college.edu",
+            "phone": "555-0135"
+        },
+        "image": "/placeholder.svg?height=200&width=300"
+    },
+    {
+        "id": 9,
+        "name": "Calculator",
+        "category": "electronics",
+        "description": "Casio scientific calculator, model FX-991EX",
+        "location": "library",
+        "status": "found",
+        "date": "2024-01-23",
+        "reporter": {
+            "name": "Charlotte Martinez",
+            "email": "charlotte@college.edu",
+            "phone": "555-0457"
+        },
+        "image": "/placeholder.svg?height=200&width=300"
+    },
+    {
+        "id": 10,
+        "name": "Basketball",
+        "category": "others",
+        "description": "Official size 7 basketball, Spalding brand",
+        "location": "sports complex",
+        "status": "lost",
+        "date": "2024-01-24",
+        "reporter": {
+            "name": "Aiden Garcia",
+            "email": "aiden@college.edu",
+            "phone": "555-0780"
+        },
+        "image": "/placeholder.svg?height=200&width=300"
+    },
+    {
+        "id": 11,
+        "name": "Keychain",
+        "category": "accessory",
+        "description": "Silver keychain with college logo",
+        "location": "cafeteria",
+        "status": "found",
+        "date": "2024-01-25",
+        "reporter": {
+            "name": "Isabella Lopez",
+            "email": "isabella@college.edu",
+            "phone": "555-0346"
+        },
+        "image": "/placeholder.svg?height=200&width=300"
+    }
+
+                        ];
+
+        // Function to show selected section
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        // Function to create item card
+        function createItemCard(item) {
+            return `
+                <div class="item-card">
+                    <img src="${item.image}" alt="${item.name}">
+                    <h3>${item.name}</h3>
+                    <p><strong>Category:</strong> ${item.category}</p>
+                    <p><strong>Location:</strong> ${item.location}</p>
+                    <p><strong>Date:</strong> ${item.date}</p>
+                    <p><strong>Description:</strong> ${item.description}</p>
+                    <span class="status-badge status-${item.status.toLowerCase()}">${item.status}</span>
+                </div>
+            `;
+        }
+
+        // Function to search and filter items
+        function searchItems() {
+            const category = document.getElementById('category').value;
+            const dateFrom = document.getElementById('date-from').value;
+            const location = document.getElementById('location').value;
+            const status = document.getElementById('status').value;
+
+            const filteredItems = items.filter(item => {
+                return (!category || item.category === category) &&
+                       (!dateFrom || item.date >= dateFrom) &&
+                       (!location || item.location === location) &&
+                       (!status || item.status === status);
+            });
+
+            const resultsContainer = document.getElementById('search-results');
+            resultsContainer.innerHTML = filteredItems.map(createItemCard).join('');
+        }
+
+        // Function to submit lost item
+        function submitLostItem(event) {
+    event.preventDefault();
+    const formData = {
+        name: document.getElementById('lost-item-name').value,
+        category: document.getElementById('lost-category').value,
+        date: document.getElementById('lost-date').value,
+        location: document.getElementById('lost-location').value,
+        description: document.getElementById('lost-description').value,
+        reporter: {
+            name: document.getElementById('reporter-name').value,
+            email: document.getElementById('reporter-email').value,
+            phone: document.getElementById('reporter-phone').value,
+        },
+        image: document.getElementById('item-image').files[0],
+    };
+
+    fetch('http://localhost:5000/api/items/lost', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        showSection('search-items');
+        searchItems();
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+        // Function to submit found item
+        function submitFoundItem(event) {
+            event.preventDefault();
+            const formData = {
+                name: document.getElementById('found-item-name').value,
+                category: document.getElementById('found-category').value,
+                date: document.getElementById('found-date').value,
+                location: document.getElementById('found-location').value,
+                description: document.getElementById('found-description').value,
+                reporter: {
+                    name: document.getElementById('finder-name').value,
+                    email: document.getElementById('finder-email').value,
+                    phone: document.getElementById('finder-phone').value
+                },
+                status: 'found',
+                id: items.length + 1,
+                image: "/placeholder.svg?height=200&width=300"
+            };
+
+            items.push(formData);
+            alert('Found item report submitted successfully!');
+            event.target.reset();
+            showSection('search-items');
+            searchItems();
+        }
+
+       
+        // Initialize the page
+        window.onload = function() {
+            showSection('home');
+            // Update statistics
+            document.getElementById('total-items').textContent = items.length;
+            document.getElementById('items-found').textContent = items.filter(item => item.status === 'found').length;
+            document.getElementById('items-returned').textContent = items.filter(item => item.status === 'claimed').length;
+        }
+    </script>
+</body>
+</html>

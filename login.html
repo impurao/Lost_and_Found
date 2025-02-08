@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Signup - RecoverIT</title>
+    <style>
+        /* Keep the existing styles from the signup page */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="email"], input[type="file"], input[type="number"], input[type="password"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #800080;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #600060;
+        }
+
+        .toggle-form {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .toggle-form a {
+            color: #800080;
+            text-decoration: none;
+        }
+
+        .toggle-form a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="login-container">
+        <h2>Login</h2>
+        <div class="form-group">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" placeholder="Enter your email">
+            <span class="error" id="login-email-error"></span>
+        </div>
+        <div class="form-group">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" placeholder="Enter your password">
+            <span class="error" id="login-password-error"></span>
+        </div>
+        <button onclick="validateLogin()">Login</button>
+        <div class="toggle-form">
+            <a href="#" onclick="toggleForm('signup')">Don't have an account? Sign up</a>
+        </div>
+    </div>
+
+    <div class="container" id="signup-container" style="display: none;">
+        <h2>Signup</h2>
+        <!-- Keep the existing signup form fields -->
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Enter your name">
+            <span class="error" id="name-error"></span>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email">
+            <span class="error" id="email-error"></span>
+        </div>
+        <div class="form-group">
+            <label for="usn">USN</label>
+            <input type="text" id="usn" placeholder="Enter your USN">
+            <span class="error" id="usn-error"></span>
+        </div>
+        <div class="form-group">
+            <label for="college">College</label>
+            <input type="text" id="college" placeholder="Enter your college">
+            <span class="error" id="college-error"></span>
+        </div>
+        <div class="form-group">
+            <label for="sem">Semester</label>
+            <input type="number" id="sem" placeholder="Enter your semester" min="1" max="8">
+            <span class="error" id="sem-error"></span>
+        </div>
+        <div class="form-group">
+            <label for="branch">Branch</label>
+            <select id="branch">
+                <option value="">Select your branch</option>
+                <option value="CSE">CSE</option>
+                <option value="ISE">ISE</option>
+                <option value="AIML">AIML</option>
+                <option value="CSBS">CSBS</option>
+                <option value="ECE">ECE</option>
+                <option value="ETE">ETE</option>
+                <option value="ME">ME</option>
+                <option value="CIVIL">CIVIL</option>
+            </select>
+            <span class="error" id="branch-error"></span>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password">
+            <span class="error" id="password-error"></span>
+        </div>
+        <div class="form-group">
+            <label for="aadhar">Aadhaar Card (Image)</label>
+            <input type="file" id="aadhar" accept="image/*">
+            <span class="error" id="aadhar-error"></span>
+        </div>
+        <div class="form-group">
+            <label for="college-id">College ID Card (Image)</label>
+            <input type="file" id="college-id" accept="image/*">
+            <span class="error" id="college-id-error"></span>
+        </div>
+        <button onclick="validateSignup()">Signup</button>
+        <div class="toggle-form">
+            <a href="#" onclick="toggleForm('login')">Already have an account? Log in</a>
+        </div>
+    </div>
+
+    <script>
+        function toggleForm(formType) {
+            const loginContainer = document.getElementById('login-container');
+            const signupContainer = document.getElementById('signup-container');
+
+            if (formType === 'login') {
+                loginContainer.style.display = 'block';
+                signupContainer.style.display = 'none';
+            } else {
+                loginContainer.style.display = 'none';
+                signupContainer.style.display = 'block';
+            }
+        }
+
+        
+    function validateLogin() {
+    const formData = {
+        email: document.getElementById('login-email').value,
+        password: document.getElementById('login-password').value,
+    };
+
+    fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        window.location.href = 'homepage.html';
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+        
+
+        
+            function validateSignup() {
+    const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        usn: document.getElementById('usn').value,
+        college: document.getElementById('college').value,
+        semester: document.getElementById('sem').value,
+        branch: document.getElementById('branch').value,
+        password: document.getElementById('password').value,
+        aadharImage: document.getElementById('aadhar').files[0],
+        collegeIdImage: document.getElementById('college-id').files[0],
+    };
+
+    fetch('http://localhost:5000/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        window.location.href = 'homepage.html';
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+    </script>
+</body>
+</html>
+
